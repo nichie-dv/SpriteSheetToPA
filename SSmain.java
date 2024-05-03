@@ -7,8 +7,8 @@ import java.io.*;
 public class SSmain {
     @SuppressWarnings("resource")
     public static void main(String[] args) throws IOException, ImageSizeException {
-        BufferedImage image = ImageIO.read(new File("SpriteSheetToPA\\input.png"));
-        PrintStream output = new PrintStream(new FileOutputStream("SpriteSheetToPA\\output.txt"), true, "UTF-8");
+        BufferedImage image = ImageIO.read(new File("input.png"));
+        PrintStream output = new PrintStream(new FileOutputStream("output.txt"), true, "UTF-8");
         int width = image.getWidth();
         int height = image.getHeight();
         int pixelstandard = 15 * (width * height);
