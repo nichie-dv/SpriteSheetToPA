@@ -14,6 +14,8 @@ public class SSmain {
         int pixelstandard = 15 * (width * height);
         double defaultSpace = 11.5;
         int skipInt = 0;
+        int nextCol = 0;
+        int skipCol = 0;
         pixelstandard += 49;
         if (pixelstandard >= 16000) {
             throw new ImageSizeException("image size exceeds 16,000 characters.");
@@ -23,6 +25,7 @@ public class SSmain {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (image.getRGB(x, y) != 0) {
+                    
                     int RGB = image.getRGB(x, y);
                     @SuppressWarnings("unused")
                     int alpha = (RGB >> 24) & 255;
@@ -36,7 +39,27 @@ public class SSmain {
                     if (hex.equals("#FFFFFF")) {
                         hex = "#FFF";
                     }
-                    output.print("<color=" + hex + ">■"); 
+                    if (x + 1 != width && RGB == image.getRGB(x + 1, y)) {
+                        for (int i = 1; x + i < width; i++) {
+                            if (image.getRGB(x + i, y) != image.getRGB(x, y)) {
+                                break;
+                            } else {
+                                nextCol++;              
+                            } 
+                        } 
+                    } 
+                    if (skipCol == 0) {
+                        output.print("<color=" + hex + ">");
+                        for (int i = 0; i <= nextCol; i++) {
+                            output.print("■");
+                            if (i > 0) {
+                                skipCol++;
+                            }
+                        }
+                    } else {
+                        skipCol--;
+                    }
+                    nextCol = 0;
                 } else {
                     if (x != width && skipInt == 0) {    
                         for (int i = 1; i < width; i++) {
